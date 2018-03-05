@@ -381,7 +381,8 @@ module.exports = function(logger, portalConfig, poolConfigs){
 				['smembers', ':blocksConfirmed'],
 				['hgetall', ':shares:roundCurrent'],
                 ['hgetall', ':blocksPendingConfirms'],
-                ['zrange', ':payments', -100, -1],
+		 // ISSUE #3 reduce the amount of payments displayed to 3
+                ['zrange', ':payments', -3, -1],
                 ['hgetall', ':shares:timesCurrent']
             ];
 
@@ -449,6 +450,9 @@ module.exports = function(logger, portalConfig, poolConfigs){
                             maxRoundTime: 0,
                             shareCount: 0
                         };
+			
+			// ISSUE #3, comment this out if payments still have too many payouts.
+			var numPayments = Math.max(replies[i + 10].length, 100)
                         for(var j = replies[i + 10].length; j > 0; j--){
                             var jsonObj;
                             try {
