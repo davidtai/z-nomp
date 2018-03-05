@@ -663,7 +663,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
             });
 
             _this.stats = portalStats;
-            
+		
             // save historical hashrate, not entire stats!
             var saveStats = JSON.parse(JSON.stringify(portalStats));
             Object.keys(saveStats.pools).forEach(function(pool){
@@ -675,9 +675,9 @@ module.exports = function(logger, portalConfig, poolConfigs){
                 delete saveStats.pools[pool].miners;
             });
             _this.statsString = JSON.stringify(saveStats);
-            _this.statHistory.push(saveStats);
-            
-			addStatPoolHistory(portalStats);
+		
+            // _this.statHistory.push(saveStats);
+	    // addStatPoolHistory(portalStats);
 			
             var retentionTime = (((Date.now() / 1000) - portalConfig.website.stats.historicalRetention) | 0);
 
